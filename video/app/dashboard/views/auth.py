@@ -61,13 +61,9 @@ class AdminManger(View):
         return render_to_response(request,self.TEMPLATE,data=data)
 
 class UpdateAdminStatus(View):
-    def get(self,request):
+    def get(self,request,user_id):
         status = request.GET.get('status',"on")
-        user_id = request.GET.get('user_id')
         _status = True if status == 'on' else False
-        # request.user.is_superuser = _status
-        # request.user.id=user_id
-        # request.user.save()
         user = User.objects.filter(id=user_id)
         user.update(is_superuser=_status)
         return redirect(reverse("admin_manger"))

@@ -8,7 +8,7 @@ from app.model.video import IdentityType
 <%
 from app.model.video import VideoType,FromType,NationalityType
 %>
-<h1>${video.name}</h1>
+<h1>${video.name}<span>${error}</span></h1>
 <h2>集数</h2>
 <ul>
     %for video_sub in video.video_sub.all():
@@ -16,18 +16,24 @@ from app.model.video import VideoType,FromType,NationalityType
     %endfor
 </ul>
 <h2>演员</h2>
+<ul>
+    %for video_star in video.video_star.all():
+    <li>${video_star.name}：${IdentityType(video_star.identity).label}</li>
+    %endfor
+</ul>
 <form class="form-horizontal edit-area add-video-area add-url" method="POST">${csrf_token}
     <label>添加地址：</label><input type="text"  name="url" class="form-control"/>
     <input type="submit" value="添加" class="btn btn-info"  id="add-url-btn"/>
 </form>
-<form class="form-horizontal edit-area add-video-area add-url" method="POST">${csrf_token}
-    <label>演员：</label><input type="text"  name="url" class="form-control"/><br />
+<form class="form-horizontal edit-area add-video-area add-url" action="${reverse('video_star')}" method="POST">${csrf_token}
+    <label>演员：</label><input type="text"  name="name" class="form-control"/><br />
     <label>身份：</label>
-    <select>
+    <select class="form-control" name="identity">
         %for identity in IdentityType:
         <option value="${identity.value}">${identity.label}</option>
         %endfor
     </select>
+    <input type="hidden" value="${video.id}" name="video_id" />
     <input type="submit" value="添加" class="btn btn-info"  id="add-star-btn"/>
 </form>
 </%def>

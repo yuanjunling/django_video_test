@@ -28,11 +28,11 @@
     <td>${user.date_joined}</td>
     % if user.is_superuser:
     <td>
-        <a href="${reverse('admin_update_status')}?status=off&user_id=${user.id}">取消管理员</a>
+        <a href="${reverse('admin_update_status',kwargs={'user_id':user.id})}?status=off">取消管理员</a>
     </td>
     % else:
     <td>
-        <a href="${reverse('admin_update_status')}?status=on&user_id=${user.id}">成为管理员</a>
+        <a href="${reverse('admin_update_status',kwargs={'user_id':user.id})}?status=on">成为管理员</a>
     </td>
     % endif
      </tr>

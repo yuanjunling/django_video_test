@@ -3,7 +3,7 @@ from django.shortcuts import redirect,reverse
 from django.views import View
 from app.utils.permission import dashboard_auth
 from app.libs.base_render import render_to_response
-from app.model.video import VideoType,FromType,NationalityType,Video,VideoSub
+from app.model.video import VideoType,FromType,NationalityType,IdentityType,Video,VideoSub,VideoStar
 from app.utils.common import check_and_get_video_type
 
 class ExternalVideo(View):
@@ -58,13 +58,42 @@ class VideoSubView(View):
     def get(self, request,video_id):
         data = {}
         video = Video.objects.get(pk=video_id)
+        error = request.GET.get('error','')
         data['video']=video
+        data['error']=error
         return render_to_response(request,self.TEMPLATE,data)
 
     def post(self,request,video_id):
         url = request.POST.get('url')
         video = Video.objects.get(pk=video_id)
         length = video.video_sub.count()
-        VideoSub.objects.create(video=video,url=url,number=int(length) + 1)
+        VideoSub.objects.create(
+            video=video,
+            url=url,
+            number=int(length) + 1
+        )
+        return redirect(reverse('video_sub',kwargs={'video_id':video_id}))
 
+class VideoStarView(View):
+    def post(self,request):
+        name = request.POST.get('name')
+        identity = request.POST.get('identity')
+        video_id = request.POST.get('video_id')
+        path_format = '{}'.format(reverse('video_sub',kwargs={'video_id':video_id}))
+        if not all([name,identity,video_id]):
+           return redirect('{}?error={}'.format(path_format,'缺少必要字段'))
+        result = check_and_get_video_type(
+            IdentityType,identity,'不存在该身份'
+        )
+        if result.get('code') != 0:
+            return redirect('{}?error={}'.format(path_format,result['msg']))
+        video = Video.objects.get(pk=video_id)
+        try:
+            VideoStar.objects.create(
+                video = video,
+                name=name,
+                identity=identity
+            )
+        except:
+            return redirect('{}?error={}'.format(path_format,'创建失败！'))
         return redirect(reverse('video_sub',kwargs={'video_id':video_id}))
