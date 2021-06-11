@@ -95,6 +95,8 @@ from app.model.video import VideoType,FromType,NationalityType
         <td><a href="">编辑</a>|<a href="${reverse('video_sub',kwargs={'video_id':video.id})}">详情</a></td>
      </tr>
     % endfor
+    </tbody>
+</table>
 </%def>
 <%def name="css()">
     <link href="/static/dashboard/css/ceterna_video.css" rel="stylesheet" />

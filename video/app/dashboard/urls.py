@@ -3,7 +3,7 @@
 from django.urls import path
 from .views.base import Index
 from .views.auth import Login,AdminManger,Logout,UpdateAdminStatus
-from .views.video import ExternalVideo,VideoSubView,VideoStarView
+from .views.video import ExternalVideo,VideoSubView,VideoStarView,StarDelete
 
 
 urlpatterns = [
@@ -14,5 +14,6 @@ urlpatterns = [
     path('admin/manger/update/status/<int:user_id>',UpdateAdminStatus.as_view(),name='admin_update_status'),
     path('video/externa',ExternalVideo.as_view(),name='externa_video'),
     path('video/videosub/<int:video_id>',VideoSubView.as_view(),name='video_sub'),
-    path('video/Star',VideoStarView.as_view(),name='video_star')
+    path('video/Star',VideoStarView.as_view(),name='video_star'),
+    path('video/star/delete/<int:star_id>/<int:video_id>',StarDelete.as_view(),name='star_delete')
 ]

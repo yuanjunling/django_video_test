@@ -97,3 +97,8 @@ class VideoStarView(View):
         except:
             return redirect('{}?error={}'.format(path_format,'创建失败！'))
         return redirect(reverse('video_sub',kwargs={'video_id':video_id}))
+
+class StarDelete(View):
+    def get(self,request,star_id,video_id):
+        VideoStar.objects.filter(id=star_id).delete()
+        return redirect(reverse('video_sub',kwargs={'video_id':video_id}))
