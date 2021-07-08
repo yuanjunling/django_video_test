@@ -67,6 +67,9 @@ class VideoSubView(View):
         url = request.POST.get('url')
         video = Video.objects.get(pk=video_id)
         length = video.video_sub.count()
+        path_format = '{}'.format(reverse('video_sub', kwargs={'video_id': video_id}))
+        if not all([url,video]):
+            return redirect('{}?error={}'.format(path_format, '缺少必要字段'))
         VideoSub.objects.create(
             video=video,
             url=url,
