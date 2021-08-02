@@ -20,3 +20,16 @@ p{
     font-size: 20px;
     font-weight: bold;
 }
+
+.info{
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-style: normal;
+    font-size: 16px;
+}
+
+li{
+    display: inline-block;
+}
