@@ -2,3 +2,4 @@ django==2.1.2
 mako==1.0.7
 pymysql
 jieba==0.42.1
+qiniu

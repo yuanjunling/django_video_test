@@ -1,3 +1,4 @@
+# coding:utf-8
 import os
 from pathlib import Path
 
@@ -126,3 +127,8 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+#七牛云配置
+QINIU_AK = '3SlSZFul_ASSE3MysbJlVbDdJYekK8vYs4IqfvR4'
+QINIU_SK = 'KKwKEFJ-TdDiqECEApbNp8Sq2v_hv8Jvrf-clmVJ'
+QINIU_VIDEO = 'yuanvideo01'
+QINIU_VIDEO_URL = 'http://qy187a49f.hn-bkt.clouddn.com'
